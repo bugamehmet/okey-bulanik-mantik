@@ -45,6 +45,7 @@ def seri_bul(taşlar):
                     # seri_listesi.append([str(taşlar[i]), str(taşlar[j]), str(taşlar[k])])
 
     return seri_listesi
+
 def per_bul(taşlar):
     per_listesi = []
     for i in range(len(taşlar)):
@@ -73,12 +74,17 @@ def farkli_renk_bul(taşlar):
                     # farkli_renk_listesi.append([str(taşlar[i]), str(taşlar[j]), str(taşlar[k])]) liste döndürecek gerek olursa
 
     return farkli_renk_listesi
+def el_gücü(taslar):
+    güç = 0
+    for tas in taslar:
+        güç += tas.deger
+    return güç
 def kombinasyonlari_bul_sayisal(oyuncular):
     for oyuncu in oyuncular:
         seri_degerleri = seri_bul(oyuncu)
         per_degerleri = per_bul(oyuncu)
         farkli_degerleri = farkli_renk_bul(oyuncu)
-
+        el_gücü_degerleri = el_gücü(oyuncu)
         seri_toplami = 0
         for seri in seri_degerleri:
             seri_toplami += sum(seri)
@@ -94,15 +100,9 @@ def kombinasyonlari_bul_sayisal(oyuncular):
         print(f"Oyuncu {oyuncular.index(oyuncu)}'nun seri kombinasyonlarının toplamı: {seri_toplami}")
         print(f"Oyuncu {oyuncular.index(oyuncu)}'nun per kombinasyonlarının toplamı: {per_toplami}")
         print(f"Oyuncu {oyuncular.index(oyuncu)}'nun farklı renk kombinasyonlarının toplamı: {farkli_toplami}")
+        print(f"Oyuncu {oyuncular.index(oyuncu)}'nun el gücünün değeri : {el_gücü_degerleri}")
 
     return
 
 
-def el_gücü(taslar):
-    güç = 0
-    for tas in taslar:
-        güç += tas.deger
-
-    return güç
-
-
+print(kombinasyonlari_bul_sayisal(oyuncular))
