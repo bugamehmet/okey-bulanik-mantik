@@ -13,6 +13,19 @@ class Tas:
     def __hash__(self):
         return hash((self.renk, self.deger))
 
+taslar = []
+for i in range(2):
+    for renk in ["kırmızı", "siyah", "yeşil", "mavi"]:
+        for deger in range(1, 14):
+            taslar.append(Tas(renk, deger))
+def dağıtım(taslar):
+    oyuncular = [[] for i in range(4)]
+    shuffle(taslar)
+    for i in range(4):
+        oyuncular[i].extend([taslar.pop() for j in range(21)])
+    return oyuncular
+oyuncular = dağıtım(taslar)
+oyuncular[0].extend([taslar.pop() for i in range(1)])
 def taslar(taslar):
     o_taslari = []
     for i in range(len(taslar)):
@@ -65,7 +78,6 @@ def el_gücü(taslar):
     for tas in taslar:
         güç += tas.deger
     return güç
-
 def kombinasyonlari_bul_sayisal(oyuncular):
     for oyuncu_index, oyuncu in enumerate(oyuncular):
         seri_degerleri = seri_bul(oyuncu)
@@ -83,22 +95,6 @@ def kombinasyonlari_bul_sayisal(oyuncular):
         print(f"Oyuncu {oyuncu_index}'nun farklı renk kombinasyonlarının toplamı: {farkli_toplami}")
         print(f"Oyuncu {oyuncu_index}'nun el gücünün değeri : {el_gücü_degerleri}")
 
-
-taslar = []
-for i in range(2):
-    for renk in ["kırmızı", "siyah", "yeşil", "mavi"]:
-        for deger in range(1, 14):
-            taslar.append(Tas(renk, deger))
-
-def dağıtım(taslar):
-    oyuncular = [[] for i in range(4)]
-    shuffle(taslar)
-    for i in range(4):
-        oyuncular[i].extend([taslar.pop() for j in range(14)])
-    return oyuncular
-
-oyuncular = dağıtım(taslar)
-oyuncular[0].extend([taslar.pop() for i in range(1)])
 
 kombinasyonlari_bul_sayisal(oyuncular)
 
