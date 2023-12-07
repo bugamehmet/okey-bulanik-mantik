@@ -30,6 +30,11 @@ def dağıtım(taslar):
 oyuncular = dağıtım(taslar)
 oyuncular[0].extend([taslar.pop() for i in range(1)])
 
+def taslar(taslar):
+    o_taslari = []
+    for i in range(len(taslar)):
+        o_taslari.append(str(taslar[i]))
+    return o_taslari
 def seri_bul(taşlar):
     seri_listesi = []
     for i in range(len(taşlar)):
@@ -43,9 +48,7 @@ def seri_bul(taşlar):
                 ):
                     seri_listesi.append([taşlar[i].deger, taşlar[j].deger, taşlar[k].deger])
                     # seri_listesi.append([str(taşlar[i]), str(taşlar[j]), str(taşlar[k])])
-
     return seri_listesi
-
 def per_bul(taşlar):
     per_listesi = []
     for i in range(len(taşlar)):
@@ -85,6 +88,7 @@ def kombinasyonlari_bul_sayisal(oyuncular):
         per_degerleri = per_bul(oyuncu)
         farkli_degerleri = farkli_renk_bul(oyuncu)
         el_gücü_degerleri = el_gücü(oyuncu)
+        oo_taslar = taslar(oyuncu)
         seri_toplami = 0
         for seri in seri_degerleri:
             seri_toplami += sum(seri)
@@ -96,13 +100,14 @@ def kombinasyonlari_bul_sayisal(oyuncular):
         farkli_toplami = 0
         for seri in farkli_degerleri:
             farkli_toplami += sum(seri)
-
+        print(f"Oyuncu {oyuncular.index(oyuncu)}'nun  taşları: {oo_taslar}")
         print(f"Oyuncu {oyuncular.index(oyuncu)}'nun seri kombinasyonlarının toplamı: {seri_toplami}")
         print(f"Oyuncu {oyuncular.index(oyuncu)}'nun per kombinasyonlarının toplamı: {per_toplami}")
         print(f"Oyuncu {oyuncular.index(oyuncu)}'nun farklı renk kombinasyonlarının toplamı: {farkli_toplami}")
         print(f"Oyuncu {oyuncular.index(oyuncu)}'nun el gücünün değeri : {el_gücü_degerleri}")
 
-    return
 
 
-print(kombinasyonlari_bul_sayisal(oyuncular))
+kombinasyonlari_bul_sayisal(oyuncular)
+
+# eldeki taş sayısı < 21
