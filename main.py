@@ -98,4 +98,6 @@ def kombinasyonlari_bul_sayisal(oyuncular):
 
 kombinasyonlari_bul_sayisal(oyuncular)
 
-# eldeki taş sayısı < 21
+# eldeki taş sayısı < 21 ise
+
+#
