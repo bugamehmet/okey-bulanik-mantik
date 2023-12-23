@@ -4,7 +4,7 @@ class Tas:
     def __init__(self, tip, renk=None, deger=None):
         self.tip = tip
         self.renk = renk
-        self.deger = deger
+        self.deger = deger if deger is not None else 0
 
     def __str__(self):
         if self.tip == "normal":
@@ -24,31 +24,6 @@ class Tas:
         else:
             return hash((self.tip,))
 
-
-api_key = "lduRM9gO46HC7HCEGxTj"
-project_name = "okeyy"
-model_version = 4
-
-while True:
-    detected_classes = taslari_bul(api_key, project_name, model_version)
-    print(detected_classes)
-    taslar = []
-    for detected_class in detected_classes:
-        if detected_class == "gosterge" or detected_class == "okey":
-            taslar.append(Tas(detected_class))
-        else:
-            renk = detected_class[:1]
-            print(f"renk : {renk}")
-            if renk in ["K", "S", "T", "M"]:
-                deger = int(detected_class[1:])
-                print(f"deger : {deger}")
-                taslar.append(Tas("normal", renk, deger))
-
-    print("Detected Taslar:", [str(tas) for tas in taslar])
-
-    # Diğer işlemlerinizi yapabilirsiniz.
-
-    time.sleep(10)
 
 def taslar(taslar):
     o_taslari = []
@@ -102,19 +77,45 @@ def el_gücü(taslar):
     for tas in taslar:
         güç += tas.deger
     return güç
-def kombinasyonlari_bul_sayisal(oyuncular):
-    for oyuncu_index, oyuncu in enumerate(oyuncular):
-        seri_degerleri = seri_bul(oyuncu)
-        per_degerleri = per_bul(oyuncu)
-        farkli_degerleri = farkli_renk_bul(oyuncu)
-        el_gücü_degerleri = el_gücü(oyuncu)
-        oo_taslar = taslar(oyuncu)
-        seri_toplami = sum(sum(seri) for seri in seri_degerleri)
-        per_toplami = sum(sum(per) for per in per_degerleri)
-        farkli_toplami = sum(sum(farkli) for farkli in farkli_degerleri)
+def kombinasyonlari_bul_sayisal(taşlar):
+    seri_degerleri = seri_bul(taşlar)
+    per_degerleri = per_bul(taşlar)
+    farkli_degerleri = farkli_renk_bul(taşlar)
+    el_gücü_degerleri = el_gücü(taşlar)
 
-        print(f"Oyuncu {oyuncular.index(oyuncu)}'nun  taşları: {oo_taslar}")
-        print(f"Oyuncu {oyuncu_index}'nun seri kombinasyonlarının toplamı: {seri_toplami}")
-        print(f"Oyuncu {oyuncu_index}'nun per kombinasyonlarının toplamı: {per_toplami}")
-        print(f"Oyuncu {oyuncu_index}'nun farklı renk kombinasyonlarının toplamı: {farkli_toplami}")
-        print(f"Oyuncu {oyuncu_index}'nun el gücünün değeri : {el_gücü_degerleri}")
+    seri_toplami = sum(sum(seri) for seri in seri_degerleri)
+    per_toplami = sum(sum(per) for per in per_degerleri)
+    farkli_toplami = sum(sum(farkli) for farkli in farkli_degerleri)
+
+    print(f"Oyuncunun seri kombinasyonlarının toplamı: {seri_toplami}")
+    print(f"Oyuncunun per kombinasyonlarının toplamı: {per_toplami}")
+    print(f"Oyuncunun farklı renk kombinasyonlarının toplamı: {farkli_toplami}")
+    print(f"Oyuncunun el gücünün değeri : {el_gücü_degerleri}")
+
+
+
+api_key = "lduRM9gO46HC7HCEGxTj"
+project_name = "okeyy"
+model_version = 4
+
+while True:
+    detected_classes = taslari_bul(api_key, project_name, model_version)
+    print(detected_classes)
+    taslar = []
+    for detected_class in detected_classes:
+        if detected_class == "gosterge" or detected_class == "okey":
+            taslar.append(Tas(detected_class))
+        else:
+            renk = detected_class[:1]
+            #print(f"renk : {renk}")
+            if renk in ["K", "S", "T", "M"]:
+                deger = int(detected_class[1:])
+                #print(f"deger : {deger}")
+                taslar.append(Tas("normal", renk, deger))
+
+    print("Detected Taslar:", [str(tas) for tas in taslar])
+    kombinasyonlari_bul_sayisal(taslar)
+
+    # Diğer işlemlerinizi yapabilirsiniz.
+
+    time.sleep(10)
