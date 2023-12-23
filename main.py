@@ -1,31 +1,55 @@
-from random import shuffle
+import time
+from taslaribul import taslari_bul
 class Tas:
-    def __init__(self, renk, deger):
+    def __init__(self, tip, renk=None, deger=None):
+        self.tip = tip
         self.renk = renk
         self.deger = deger
 
     def __str__(self):
-        return f"{self.renk} {self.deger}"
+        if self.tip == "normal":
+            return f"{self.renk} {self.deger}"
+        else:
+            return f"{self.tip}"
 
     def __eq__(self, other):
-        return self.renk == other.renk and self.deger == other.deger
+        if self.tip == other.tip == "normal":
+            return self.renk == other.renk and self.deger == other.deger
+        else:
+            return self.tip == other.tip
 
     def __hash__(self):
-        return hash((self.renk, self.deger))
+        if self.tip == "normal":
+            return hash((self.renk, self.deger))
+        else:
+            return hash((self.tip,))
 
-taslar = []
-for i in range(2):
-    for renk in ["kırmızı", "siyah", "yeşil", "mavi"]:
-        for deger in range(1, 14):
-            taslar.append(Tas(renk, deger))
-def dağıtım(taslar):
-    oyuncular = [[] for i in range(4)]
-    shuffle(taslar)
-    for i in range(4):
-        oyuncular[i].extend([taslar.pop() for j in range(21)])
-    return oyuncular
-oyuncular = dağıtım(taslar)
-oyuncular[0].extend([taslar.pop() for i in range(1)])
+
+api_key = "lduRM9gO46HC7HCEGxTj"
+project_name = "okeyy"
+model_version = 4
+
+while True:
+    detected_classes = taslari_bul(api_key, project_name, model_version)
+    print(detected_classes)
+    taslar = []
+    for detected_class in detected_classes:
+        if detected_class == "gosterge" or detected_class == "okey":
+            taslar.append(Tas(detected_class))
+        else:
+            renk = detected_class[:1]
+            print(f"renk : {renk}")
+            if renk in ["K", "S", "T", "M"]:
+                deger = int(detected_class[1:])
+                print(f"deger : {deger}")
+                taslar.append(Tas("normal", renk, deger))
+
+    print("Detected Taslar:", [str(tas) for tas in taslar])
+
+    # Diğer işlemlerinizi yapabilirsiniz.
+
+    time.sleep(10)
+
 def taslar(taslar):
     o_taslari = []
     for i in range(len(taslar)):
@@ -94,10 +118,3 @@ def kombinasyonlari_bul_sayisal(oyuncular):
         print(f"Oyuncu {oyuncu_index}'nun per kombinasyonlarının toplamı: {per_toplami}")
         print(f"Oyuncu {oyuncu_index}'nun farklı renk kombinasyonlarının toplamı: {farkli_toplami}")
         print(f"Oyuncu {oyuncu_index}'nun el gücünün değeri : {el_gücü_degerleri}")
-
-
-kombinasyonlari_bul_sayisal(oyuncular)
-
-# eldeki taş sayısı < 21 ise
-
-#

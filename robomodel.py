@@ -11,18 +11,16 @@ model = project.version(4).model
 while True:
     screenshot = pyautogui.screenshot()
     screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
-    predictions = model.predict(screenshot, confidence=40, overlap=30).json()
+    predictions = model.predict(screenshot, confidence=60, overlap=50).json()
 
     detected_classes = []
 
     for prediction in predictions['predictions']:
         detected_class = prediction.get('class')
 
-        if detected_class is not None:
-            detected_classes.append(detected_class)
-            #print(f"Detected Class: {detected_class}.")
-        else:
-            print("No 'class' key found in the prediction.")
+        detected_classes.append(detected_class)
+        #print(f"Detected Class: {detected_class}.")
+        #confidence = prediction.get('confidence')
 
     print("Detected Classes:", detected_classes)
 
