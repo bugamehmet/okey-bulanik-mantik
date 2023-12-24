@@ -1,5 +1,7 @@
 import time
 from taslaribul import taslari_bul
+from kombinasyonlar import seri_bul, farkli_renk_bul, per_bul, el_gucu
+
 class Tas:
     def __init__(self, tip, renk=None, deger=None):
         self.tip = tip
@@ -24,81 +26,22 @@ class Tas:
         else:
             return hash((self.tip,))
 
-
-def taslar(taslar):
-    o_taslari = []
-    for i in range(len(taslar)):
-        o_taslari.append(str(taslar[i]))
-    return o_taslari
-def seri_bul(taşlar):
-    seri_listesi = []
-    for i in range(len(taşlar)):
-        for j in range(i + 1, len(taşlar)):
-            for k in range(j + 1, len(taşlar)):
-                if (
-                    taşlar[i].renk == taşlar[j].renk
-                    and taşlar[i].renk == taşlar[k].renk
-                    and taşlar[i].deger + 1 == taşlar[j].deger
-                    and taşlar[j].deger + 1 == taşlar[k].deger
-                ):
-                    seri_listesi.append([taşlar[i].deger, taşlar[j].deger, taşlar[k].deger])
-                    # seri_listesi.append([str(taşlar[i]), str(taşlar[j]), str(taşlar[k])])
-    return seri_listesi
-def per_bul(taşlar):
-    per_listesi = []
-    for i in range(len(taşlar)):
-        for j in range(i + 1, len(taşlar)):
-            for k in range(j + 1, len(taşlar)):
-                for l in range(k + 1, len(taşlar)):
-                    if (
-                        taşlar[i].renk == taşlar[j].renk
-                        and taşlar[i].renk == taşlar[k].renk
-                        and taşlar[i].renk == taşlar[l].renk
-                        and taşlar[i].deger + 1 == taşlar[j].deger
-                        and taşlar[j].deger + 1 == taşlar[k].deger
-                        and taşlar[k].deger + 1 == taşlar[l].deger
-                    ):
-                        per_listesi.append([taşlar[i].deger, taşlar[j].deger, taşlar[k].deger, taşlar[l].deger])
-                        # per_listesi.append([str(taşlar[i]), str(taşlar[j]), str(taşlar[k]), str(taşlar[l])])
-
-    return per_listesi
-def farkli_renk_bul(taşlar):
-    farkli_renk_listesi = []
-    for i in range(len(taşlar)):
-        for j in range(i + 1, len(taşlar)):
-            for k in range(j + 1, len(taşlar)):
-                if taşlar[i].deger == taşlar[j].deger == taşlar[k].deger and taşlar[i].renk != taşlar[j].renk and taşlar[i].renk != taşlar[k].renk and taşlar[j].renk != taşlar[k].renk:
-                    farkli_renk_listesi.append([taşlar[i].deger, taşlar[j].deger, taşlar[k].deger])
-                    # farkli_renk_listesi.append([str(taşlar[i]), str(taşlar[j]), str(taşlar[k])]) liste döndürecek gerek olursa
-
-    return farkli_renk_listesi
-def el_gücü(taslar):
-    güç = 0
-    for tas in taslar:
-        güç += tas.deger
-    return güç
-def kombinasyonlari_bul_sayisal(taşlar):
-    seri_degerleri = seri_bul(taşlar)
-    per_degerleri = per_bul(taşlar)
-    farkli_degerleri = farkli_renk_bul(taşlar)
-    el_gücü_degerleri = el_gücü(taşlar)
+def kombinasyonlari_bul_sayisal(taslar):
+    seri_degerleri = seri_bul(taslar)
+    per_degerleri = per_bul(taslar)
+    farkli_degerleri = farkli_renk_bul(taslar)
+    el_gucu_degerleri = el_gucu(taslar)
 
     seri_toplami = sum(sum(seri) for seri in seri_degerleri)
     per_toplami = sum(sum(per) for per in per_degerleri)
     farkli_toplami = sum(sum(farkli) for farkli in farkli_degerleri)
 
-    print(f"Oyuncunun seri kombinasyonlarının toplamı: {seri_toplami}")
-    print(f"Oyuncunun per kombinasyonlarının toplamı: {per_toplami}")
-    print(f"Oyuncunun farklı renk kombinasyonlarının toplamı: {farkli_toplami}")
-    print(f"Oyuncunun el gücünün değeri : {el_gücü_degerleri}")
+    print(f"Oyuncunun seri kombinasyonlarinin toplami: {seri_toplami}")
+    print(f"Oyuncunun per kombinasyonlarinin toplami: {per_toplami}")
+    print(f"Oyuncunun farkli renk kombinasyonlarinin toplami: {farkli_toplami}")
+    print(f"Oyuncunun el gucunun degeri : {el_gucu_degerleri}")
 
-
-
-api_key = "lduRM9gO46HC7HCEGxTj"
-project_name = "okeyy"
-model_version = 4
-
-while True:
+def taslari_isle(api_key, project_name, model_version):
     detected_classes = taslari_bul(api_key, project_name, model_version)
     print(detected_classes)
     taslar = []
@@ -107,15 +50,21 @@ while True:
             taslar.append(Tas(detected_class))
         else:
             renk = detected_class[:1]
-            #print(f"renk : {renk}")
             if renk in ["K", "S", "T", "M"]:
                 deger = int(detected_class[1:])
-                #print(f"deger : {deger}")
                 taslar.append(Tas("normal", renk, deger))
 
     print("Detected Taslar:", [str(tas) for tas in taslar])
     kombinasyonlari_bul_sayisal(taslar)
 
-    # Diğer işlemlerinizi yapabilirsiniz.
+def main():
+    api_key = "lduRM9gO46HC7HCEGxTj"
+    project_name = "okeyy"
+    model_version = 4
 
-    time.sleep(10)
+    while True:
+        taslari_isle(api_key, project_name, model_version)
+        time.sleep(10)
+
+if __name__ == "__main__":
+    main()
