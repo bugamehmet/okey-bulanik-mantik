@@ -48,3 +48,35 @@ def el_gucu(taslar):
     for tas in taslar:
         guc += tas.deger
     return guc
+
+def cift_tas_bul(taslar):
+    cift_sayisi = 0
+    for i in range(len(taslar)):
+        for j in range(i + 1, len(taslar)):
+            if taslar[i].deger == taslar[j].deger and taslar[i].renk == taslar[j].renk:
+                cift_sayisi += 1
+    return cift_sayisi // 2
+
+def okey_bul(taslar):
+    okey_sayisi = 0
+    for tas in taslar:
+        if tas.tip == "okey":
+            okey_sayisi += 1
+    return okey_sayisi
+
+def gosterge_bul(taslar):
+    gosterge_sayisi = 0
+    for tas in taslar:
+        if tas.tip == "gosterge":
+            gosterge_sayisi += 1
+    return gosterge_sayisi
+
+
+"""
+
+--> okey kazanma oranını arttırmalı
+--> 2 okey daha çok arttırmalı
+--> eldeki çift sayısına göre gösterge kazanma oranını arttırmalı
+
+
+"""
