@@ -1,7 +1,6 @@
 import time
 from taslaribul import taslari_bul
-from kombinasyonlar import seri_bul, farkli_renk_bul, per_bul, el_gucu
-
+from kombinasyonlar import seri_bul, farkli_renk_bul, per_bul, el_gucu, cift_tas_bul, okey_bul, gosterge_bul
 class Tas:
     def __init__(self, tip, renk=None, deger=None):
         self.tip = tip
@@ -26,16 +25,28 @@ class Tas:
         else:
             return hash((self.tip,))
 
+
 def kombinasyonlari_bul_sayisal(taslar):
     seri_degerleri = seri_bul(taslar)
     per_degerleri = per_bul(taslar)
     farkli_degerleri = farkli_renk_bul(taslar)
     el_gucu_degerleri = el_gucu(taslar)
+    ciftler = cift_tas_bul(taslar)
+    okey = okey_bul(taslar)
+    gosterge = gosterge_bul(taslar)
 
     seri_toplami = sum(sum(seri) for seri in seri_degerleri)
     per_toplami = sum(sum(per) for per in per_degerleri)
     farkli_toplami = sum(sum(farkli) for farkli in farkli_degerleri)
+    cift_sayisi = ciftler
+    okey_sayisi = okey
+    gosterge_sayisi = gosterge
+    elin_toplami = seri_toplami + per_toplami + farkli_toplami
 
+    print(f"Oyuncunun El Gücü: {elin_toplami}")
+    print(f"Oyuncunun gösterge sayısı: {gosterge_sayisi}")
+    print(f"Oyuncunun Okey sayısı: {okey_sayisi}")
+    print(f"Oyuncunun çift kombinasyonlarinin toplami: {cift_sayisi}")
     print(f"Oyuncunun seri kombinasyonlarinin toplami: {seri_toplami}")
     print(f"Oyuncunun per kombinasyonlarinin toplami: {per_toplami}")
     print(f"Oyuncunun farkli renk kombinasyonlarinin toplami: {farkli_toplami}")
@@ -68,3 +79,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+""" DOSYAYA YAZMA
+    with open("kombinasyonlar.txt", "a") as dosya:
+        dosya.write(f"Seri Toplamı: {seri_toplami}\n")
+        dosya.write(f"Per Toplamı: {per_toplami}\n")
+        dosya.write(f"Farklı Renk Toplamı: {farkli_toplami}\n")
+        dosya.write(f"Çift Sayısı: {cift_sayisi}\n")
+        dosya.write(f"Okey Sayısı: {okey_sayisi}\n")
+        dosya.write(f"Gösterge Sayısı: {gosterge_sayisi}\n")
+        dosya.write(f"El Gücü: {elin_toplami}\n")
+        dosya.write("\n")
+"""
