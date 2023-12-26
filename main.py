@@ -1,6 +1,7 @@
 import time
 from taslaribul import taslari_bul
 from kombinasyonlar import seri_bul, farkli_renk_bul, per_bul, el_gucu, cift_tas_bul, okey_bul, gosterge_bul
+from bulanik import bulanik_hesap
 class Tas:
     def __init__(self, tip, renk=None, deger=None):
         self.tip = tip
@@ -41,6 +42,8 @@ def kombinasyonlari_bul_sayisal(taslar):
     cift_sayisi = ciftler
     okey_sayisi = okey
     gosterge_sayisi = gosterge
+    if gosterge_sayisi > 2:
+        gosterge_sayisi = 2
     elin_toplami = seri_toplami + per_toplami + farkli_toplami
 
     print(f"Oyuncunun El Gücü: {elin_toplami}")
@@ -51,6 +54,8 @@ def kombinasyonlari_bul_sayisal(taslar):
     print(f"Oyuncunun per kombinasyonlarinin toplami: {per_toplami}")
     print(f"Oyuncunun farkli renk kombinasyonlarinin toplami: {farkli_toplami}")
     print(f"Oyuncunun el gucunun degeri : {el_gucu_degerleri}")
+
+    bulanik_hesap(seri_toplami, per_toplami, farkli_toplami, cift_sayisi, gosterge_sayisi, okey_sayisi, el_gucu_degerleri, elin_toplami)
 
 def taslari_isle(api_key, project_name, model_version):
     detected_classes = taslari_bul(api_key, project_name, model_version)
@@ -75,7 +80,7 @@ def main():
 
     while True:
         taslari_isle(api_key, project_name, model_version)
-        time.sleep(10)
+        time.sleep(5)
 
 if __name__ == "__main__":
     main()
