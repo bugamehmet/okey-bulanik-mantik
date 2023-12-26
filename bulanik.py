@@ -609,7 +609,9 @@ def bulanik_hesap(seri_sayisi, per_sayisi, farkli_renk_sayisi, cift_sayisi, gost
     print(kazanma_orani_sim.output)
     kazanma_orani.view(sim=kazanma_orani_sim)
 
-    plt.show()
+    plt.show() # block = false
+    #plt.pause(5)
+    #plt.close()
 
 
 #bulanik_hesap(30,30,30,0,0,150,150)
