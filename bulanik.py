@@ -590,6 +590,7 @@ def bulanik_hesap(seri_sayisi, per_sayisi, farkli_renk_sayisi, cift_sayisi, gost
     kazanma_orani_sim = ctrl.ControlSystemSimulation(kazanma_orani_ctrl)
 
     print(f"Seri : {seri_sayisi}", f"Per : {per_sayisi}",
+          f"Çift Sayı: {cift_sayisi}"
           f"Farkli : {farkli_renk_sayisi}",
             f"gösterge : {gosterge_sayisi}", f"Okey : {okey_sayisi}",
           f"Ham güç : {el_ham_gucu_sayisi}", f"Güç : {el_gucu_sayisi}")
@@ -604,9 +605,7 @@ def bulanik_hesap(seri_sayisi, per_sayisi, farkli_renk_sayisi, cift_sayisi, gost
     kazanma_orani_sim.input["EG"] = el_gucu_sayisi
 
     kazanma_orani_sim.compute()
-
     print(kazanma_orani_sim.output["KO"])
-    print(kazanma_orani_sim.output)
     kazanma_orani.view(sim=kazanma_orani_sim)
 
     plt.show() # block = false

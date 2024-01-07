@@ -70,13 +70,3 @@ def gosterge_bul(taslar):
         if tas.tip == "gosterge":
             gosterge_sayisi += 1
     return gosterge_sayisi
-
-
-"""
-
---> okey kazanma oranını arttırmalı
---> 2 okey daha çok arttırmalı
---> eldeki çift sayısına göre gösterge kazanma oranını arttırmalı
-
-
-"""
